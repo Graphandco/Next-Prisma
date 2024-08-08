@@ -1,5 +1,6 @@
-import Link from "next/link";
 import prisma from "../lib/db";
+import EventCard from "./EventCard";
+import AddEvent from "./AddEvent";
 
 export default async function EventsPage() {
 	const events = await prisma.event.findMany({
@@ -22,20 +23,21 @@ export default async function EventsPage() {
 		// skip: 1,
 	});
 
+	// console.log(events);
+
 	const eventsCount = await prisma.event.count();
 
 	return (
-		<div className="m-3">
+		<div className="m-5">
 			<h1 className="text-3xl">Tous les événements ({eventsCount})</h1>
-			<ul>
+			<div className="flex gap-5 mt-5">
 				{events.map((event) => (
-					<li key={event.id}>
-						<div className="font-bold">{event.title}</div>
-						<p>{event.content}</p>
-						<Link href={`/events/${event.slug}`}>Voir</Link>
-					</li>
+					<EventCard key={event.id} event={event} />
 				))}
-			</ul>
+			</div>
+			<div className="mt-12">
+				<AddEvent />
+			</div>
 		</div>
 	);
 }
