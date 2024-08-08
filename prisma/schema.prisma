@@ -10,11 +10,24 @@ datasource db {
    url      = env("DATABASE_URL")
 }
 
+model User {
+   id             String  @id @default(cuid())
+   name           String
+   email          String  @unique
+   hashedPassword String
+   events         Event[]
+}
+
 model Event {
    id        String   @id @default(cuid())
    title     String
+   slug      String   @unique
    content   String
    published Boolean? @default(false)
    updatedAt DateTime @updatedAt
-   createdAt DateTime @default(now())
+   createdAt DateTime @default(now()) @map("created_at")
+   author    User     @relation(fields: [authorID], references: [id])
+   authorID  String   @unique
+
+   @@index(slug)
 }
