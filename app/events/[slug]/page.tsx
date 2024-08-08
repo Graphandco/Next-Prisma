@@ -1,5 +1,6 @@
 import prisma from "@/app/lib/db";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default async function EventPage({
 	params,
@@ -17,7 +18,7 @@ export default async function EventPage({
 			<h1>{event?.title}</h1>
 			<p>{event?.content}</p>
 			<Link href="/events">
-				<button>Retour</button>
+				<Button>Retour</Button>
 			</Link>
 		</div>
 	);

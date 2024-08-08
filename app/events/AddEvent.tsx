@@ -16,10 +16,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
+import { createEvent } from "@/actions/actions";
 
 const FormSchema = z.object({
 	title: z.string().min(2, {
 		message: "title must be at least 2 characters.",
+	}),
+	content: z.string().min(2, {
+		message: "content must be at least 2 characters.",
 	}),
 });
 
@@ -28,28 +32,29 @@ export default function AddEvent() {
 		resolver: zodResolver(FormSchema),
 		defaultValues: {
 			title: "",
+			content: "",
 		},
 	});
 
-	function onSubmit(data: z.infer<typeof FormSchema>) {
-		console.log(data);
-		toast({
-			title: "Vous avez soumis ces données:",
-			description: (
-				<pre className="mt-2 w-[340px] rounded-md p-4">
-					<code className="text-white">
-						{JSON.stringify(data, null, 2)}
-					</code>
-				</pre>
-			),
-		});
-	}
+	// function onSubmit(data: z.infer<typeof FormSchema>) {
+	// 	toast({
+	// 		title: "Vous avez soumis ces données:",
+	// 		description: (
+	// 			<pre className="mt-2 w-[340px] rounded-md p-4">
+	// 				<code className="text-white">
+	// 					{JSON.stringify(data, null, 2)}
+	// 				</code>
+	// 			</pre>
+	// 		),
+	// 	});
+	// }
 
 	return (
 		<Form {...form}>
 			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className="w-2/3 space-y-6"
+				action={createEvent}
+				// onSubmit={form.handleSubmit(onSubmit)}
+				className="w-72 mx-auto space-y-6"
 			>
 				<FormField
 					control={form.control}
@@ -59,7 +64,7 @@ export default function AddEvent() {
 							<FormLabel>Nom de l'événement</FormLabel>
 							<FormControl>
 								<Input
-									placeholder="Renseignez un titre"
+									placeholder="Saisissez un titre"
 									{...field}
 								/>
 							</FormControl>
@@ -70,7 +75,24 @@ export default function AddEvent() {
 						</FormItem>
 					)}
 				/>
-				<Button type="submit">Submit</Button>
+				<FormField
+					control={form.control}
+					name="content"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Contenu de l'événement</FormLabel>
+							<FormControl>
+								<Input
+									placeholder="Saisissez un texte"
+									{...field}
+								/>
+							</FormControl>
+
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<Button type="submit">Créer</Button>
 			</form>
 		</Form>
 	);
