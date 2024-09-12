@@ -10,7 +10,11 @@ export async function createEvent(formData: FormData) {
 				.replace(/\s+/g, "_")
 				.toLowerCase(),
 			content: formData.get("content") as string,
-			author: "reggio" as string,
+			author: {
+				connect: {
+					email: "test@graphandco.com",
+				},
+			},
 		},
 	});
 }

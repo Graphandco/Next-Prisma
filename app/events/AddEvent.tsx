@@ -36,18 +36,18 @@ export default function AddEvent() {
 		},
 	});
 
-	// function onSubmit(data: z.infer<typeof FormSchema>) {
-	// 	toast({
-	// 		title: "Vous avez soumis ces données:",
-	// 		description: (
-	// 			<pre className="mt-2 w-[340px] rounded-md p-4">
-	// 				<code className="text-white">
-	// 					{JSON.stringify(data, null, 2)}
-	// 				</code>
-	// 			</pre>
-	// 		),
-	// 	});
-	// }
+	function onSubmit(data: z.infer<typeof FormSchema>) {
+		toast({
+			title: "Vous avez soumis ces données:",
+			description: (
+				<pre className="mt-2 w-[340px] rounded-md p-4">
+					<code className="text-white">
+						{JSON.stringify(data, null, 2)}
+					</code>
+				</pre>
+			),
+		});
+	}
 
 	return (
 		<Form {...form}>
